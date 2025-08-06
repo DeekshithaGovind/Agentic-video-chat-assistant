@@ -1,0 +1,12 @@
+gradio
+flask
+opencv-python
+moviepy
+transformers
+torch
+torchvision
+langchain
+openai
+tiktoken
+reportlab
+matplotlib
