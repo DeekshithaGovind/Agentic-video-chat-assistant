@@ -1,0 +1,31 @@
+Challenges & Learnings: Optimization Phase
+1. Real-Time Heatmap Generation
+Challenge: The initial heatmaps were either completely blank or just showed a flat gray color—making them useless.
+Why it happened: The original implementation didn’t correctly calculate event intensity or distribute it across frames.
+What we did: Switched to a histogram-based approach using matplotlib, which now highlights the most active frame segments clearly and accurately.
+
+2. LLM Integration & Prompt Context
+Challenge: The chat assistant sometimes gave unrelated or hallucinated responses to video-based questions.
+Why it happened: The assistant didn’t have the video summary in memory during chats.
+What we did: We introduced an init_chat_memory() function to preload the summary as system context—this made responses more accurate and grounded in the video content.
+
+3. Gradio Chat API Bugs
+Challenge: We encountered repeated TypeError crashes due to mismatched input arguments when using Gradio callbacks.
+Why it happened: Some functions were defined to accept one parameter but received two from Gradio’s backend.
+What we did: Cleaned up all function signatures to support flexible parameters and added defaults—making the whole flow more stable.
+
+4. PDF Report Generation Issues
+Challenge: PDF downloads sometimes failed or crashed the app.
+Why it happened: The report function expected parameters that weren’t always passed correctly (e.g., events).
+What we did: Refactored generate_pdf_report() to take both the summary and events explicitly, and ensured these were provided at every call site.
+
+5. Local LLM Responsiveness
+Challenge: Our local model (Ollama + LLaMA3) sometimes gave delayed or off-topic responses.
+Why it happened: The prompt didn’t emphasize enough that replies must be based strictly on the video.
+What we did: We rewrote the system prompt with stronger instructions and added fallback conditions to guide the model toward relevant replies only.
+
+6. Gradio Interface Stability
+Challenge: Users sometimes experienced connection drops or WinError 10054 (socket resets).
+Why it happened: Async functions and high memory usage caused unstable connections.
+What we did: Added try-except guards around risky sections and optimized component loading to reduce pressure on memory and the network.
+
